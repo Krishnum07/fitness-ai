@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+        }
+
+        /* HERO */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+        }
+
+        .hero-text h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        .hero-text p {
+            color: #cbd5f5;
+            margin-top: 10px;
+        }
+
+        .hero img {
+            width: 320px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* FORM */
+        .container {
+            width: 400px;
+            margin: -40px auto 40px auto;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #334155;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+
+        select option {
+            color: black;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #4f46e5;
+        }
+
+        /* SECTION TITLE */
+        .title {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #a5b4fc;
+        }
+
+        /* CARDS */
+        .card {
+            background: #334155;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(99,102,241,0.5);
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .details {
+            font-size: 14px;
+            color: #cbd5f5;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-text">
+        <h1>Fitness AI 💪</h1>
+        <p>Personalized workout plans powered by smart logic</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74">
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+    <form action="/recommend" method="post">
+        <input type="number" name="age" placeholder="Enter your age" required>
+
+        <select name="goal" required>
+            <option value="">Select Goal</option>
+            <option value="weight loss">Weight Loss</option>
+            <option value="muscle gain">Muscle Gain</option>
+        </select>
+
+        <select name="level" required>
+            <option value="">Select Level</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+
+        <button>Generate Plan 🚀</button>
+    </form>
+
+    {% if plan %}
+        <div class="title">🔥 Your Workout Plan</div>
+
+        {% for item in plan %}
+        <div class="card">
+            <div class="exercise-name">
+                {{ item.name }}
+            </div>
+            <div class="details">
+                ⏱️ {{ item.duration }} min &nbsp; | &nbsp; 🔥 {{ item.duration * 5 }} kcal
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
+
+</body>
+</html>
