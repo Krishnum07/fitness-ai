@@ -3,18 +3,25 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
+# ✅ VERY IMPORTANT (no brackets mistake)
 templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
 def home(request: Request):
-    return templates.TemplateResponse("index.html", {
-        "request": request
-    })
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request}
+    )
 
 
 @app.post("/recommend")
-def recommend(request: Request, age: int = Form(...), goal: str = Form(...), level: str = Form(...)):
+def recommend(
+    request: Request,
+    age: int = Form(...),
+    goal: str = Form(...),
+    level: str = Form(...)
+):
 
     # 🔥 WEIGHT LOSS
     if goal == "weight loss":
@@ -100,7 +107,10 @@ def recommend(request: Request, age: int = Form(...), goal: str = Form(...), lev
             {"name": "Relaxation Exercises", "duration": 10}
         ]
 
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "plan": plan
-    })
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "plan": plan
+        }
+    )
