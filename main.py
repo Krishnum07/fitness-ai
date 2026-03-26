@@ -4,7 +4,6 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ✅ VERY IMPORTANT — NO brackets, NO comma
 templates = Jinja2Templates(directory="templates")
 
 
@@ -16,15 +15,80 @@ def home(request: Request):
 @app.post("/recommend", response_class=HTMLResponse)
 def recommend(request: Request, age: int = Form(...), goal: str = Form(...), level: str = Form(...)):
 
-    plan = [
-        {"name": "Push-ups", "duration": 10},
-        {"name": "Squats", "duration": 10},
-        {"name": "Plank", "duration": 5},
-        {"name": "Lunges", "duration": 10},
-        {"name": "Jump Rope", "duration": 5},
-        {"name": "Stretching", "duration": 10},
-        {"name": "Running", "duration": 15}
-    ]
+    if goal == "weight loss":
+        if level == "beginner":
+            plan = [
+                {"name": "Walking", "duration": 20},
+                {"name": "Jump Rope", "duration": 10},
+                {"name": "Stretching", "duration": 10},
+                {"name": "Light Jogging", "duration": 15},
+                {"name": "Step-ups", "duration": 10},
+                {"name": "Arm Circles", "duration": 5},
+                {"name": "Bodyweight Squats", "duration": 10}
+            ]
+        elif level == "intermediate":
+            plan = [
+                {"name": "Running", "duration": 30},
+                {"name": "Cycling", "duration": 25},
+                {"name": "Mountain Climbers", "duration": 15},
+                {"name": "Jump Squats", "duration": 15},
+                {"name": "Burpees", "duration": 15},
+                {"name": "High Knees", "duration": 10},
+                {"name": "Plank", "duration": 10}
+            ]
+        else:
+            plan = [
+                {"name": "HIIT Workout", "duration": 40},
+                {"name": "Sprint Intervals", "duration": 25},
+                {"name": "Burpees", "duration": 20},
+                {"name": "Box Jumps", "duration": 15},
+                {"name": "Jump Lunges", "duration": 15},
+                {"name": "Battle Ropes", "duration": 20},
+                {"name": "Plank Variations", "duration": 15}
+            ]
+
+    elif goal == "muscle gain":
+        if level == "beginner":
+            plan = [
+                {"name": "Push-ups", "duration": 15},
+                {"name": "Squats", "duration": 15},
+                {"name": "Plank", "duration": 10},
+                {"name": "Lunges", "duration": 15},
+                {"name": "Glute Bridge", "duration": 10},
+                {"name": "Wall Sit", "duration": 10},
+                {"name": "Superman Hold", "duration": 10}
+            ]
+        elif level == "intermediate":
+            plan = [
+                {"name": "Bench Press", "duration": 30},
+                {"name": "Deadlifts", "duration": 30},
+                {"name": "Pull-ups", "duration": 15},
+                {"name": "Shoulder Press", "duration": 20},
+                {"name": "Barbell Squats", "duration": 25},
+                {"name": "Bicep Curls", "duration": 15},
+                {"name": "Tricep Dips", "duration": 15}
+            ]
+        else:
+            plan = [
+                {"name": "Heavy Lifting", "duration": 60},
+                {"name": "Barbell Squats", "duration": 40},
+                {"name": "Deadlifts", "duration": 40},
+                {"name": "Bench Press", "duration": 35},
+                {"name": "Shoulder Press", "duration": 30},
+                {"name": "Weighted Pull-ups", "duration": 25},
+                {"name": "Leg Press", "duration": 30}
+            ]
+
+    else:
+        plan = [
+            {"name": "Yoga", "duration": 20},
+            {"name": "Meditation", "duration": 15},
+            {"name": "Stretching", "duration": 15},
+            {"name": "Breathing Exercises", "duration": 10},
+            {"name": "Light Walking", "duration": 20},
+            {"name": "Mobility Drills", "duration": 15},
+            {"name": "Relaxation Exercises", "duration": 10}
+        ]
 
     return templates.TemplateResponse("index.html", {
         "request": request,
