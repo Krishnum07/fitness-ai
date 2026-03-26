@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness AI</title>
+</head>
+
+<body>
+
+<h1>Fitness AI 💪</h1>
+
+<form action="/recommend" method="post">
+    <input type="number" name="age" placeholder="Age" required><br><br>
+
+    <select name="goal" required>
+        <option value="">Goal</option>
+        <option value="weight loss">Weight Loss</option>
+        <option value="muscle gain">Muscle Gain</option>
+    </select><br><br>
+
+    <select name="level" required>
+        <option value="">Level</option>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+    </select><br><br>
+
+    <button type="submit">Generate Plan</button>
+</form>
+
+{% if plan %}
+    <h2>Workout Plan</h2>
+
+    {% for item in plan %}
+        <p>{{ item.name }} - {{ item.duration }} min</p>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
