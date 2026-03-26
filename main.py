@@ -1,13 +1,13 @@
 from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ✅ VERY IMPORTANT (no brackets mistake)
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse(
         "index.html",
@@ -15,13 +15,8 @@ def home(request: Request):
     )
 
 
-@app.post("/recommend")
-def recommend(
-    request: Request,
-    age: int = Form(...),
-    goal: str = Form(...),
-    level: str = Form(...)
-):
+@app.post("/recommend", response_class=HTMLResponse)
+def recommend(request: Request, age: int = Form(...), goal: str = Form(...), level: str = Form(...)):
 
     # 🔥 WEIGHT LOSS
     if goal == "weight loss":
