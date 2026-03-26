@@ -2,17 +2,21 @@ from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+
 templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
 def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {
+        "request": request
+    })
 
 
 @app.post("/recommend")
 def recommend(request: Request, age: int = Form(...), goal: str = Form(...), level: str = Form(...)):
 
+    # 🔥 WEIGHT LOSS
     if goal == "weight loss":
 
         if level == "beginner":
@@ -48,6 +52,7 @@ def recommend(request: Request, age: int = Form(...), goal: str = Form(...), lev
                 {"name": "Plank Variations", "duration": 15}
             ]
 
+    # 💪 MUSCLE GAIN
     elif goal == "muscle gain":
 
         if level == "beginner":
@@ -83,6 +88,7 @@ def recommend(request: Request, age: int = Form(...), goal: str = Form(...), lev
                 {"name": "Leg Press", "duration": 30}
             ]
 
+    # 🧘 OTHER
     else:
         plan = [
             {"name": "Yoga", "duration": 20},
