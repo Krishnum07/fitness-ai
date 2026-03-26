@@ -2,26 +2,17 @@ from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
-
 templates = Jinja2Templates(directory="templates")
 
 
-# 🏠 Home Page
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-# 💪 Recommendation
 @app.post("/recommend")
-def recommend(
-    request: Request,
-    age: int = Form(...),
-    goal: str = Form(...),
-    level: str = Form(...)
-):
+def recommend(request: Request, age: int = Form(...), goal: str = Form(...), level: str = Form(...)):
 
-    # 🔥 WEIGHT LOSS
     if goal == "weight loss":
 
         if level == "beginner":
@@ -30,9 +21,9 @@ def recommend(
                 {"name": "Jump Rope", "duration": 10},
                 {"name": "Stretching", "duration": 10},
                 {"name": "Light Jogging", "duration": 15},
-                {"name": "Bodyweight Squats", "duration": 10},
+                {"name": "Step-ups", "duration": 10},
                 {"name": "Arm Circles", "duration": 5},
-                {"name": "Step-ups", "duration": 10}
+                {"name": "Bodyweight Squats", "duration": 10}
             ]
 
         elif level == "intermediate":
@@ -52,12 +43,11 @@ def recommend(
                 {"name": "Sprint Intervals", "duration": 25},
                 {"name": "Burpees", "duration": 20},
                 {"name": "Box Jumps", "duration": 15},
-                {"name": "Battle Ropes", "duration": 20},
                 {"name": "Jump Lunges", "duration": 15},
+                {"name": "Battle Ropes", "duration": 20},
                 {"name": "Plank Variations", "duration": 15}
             ]
 
-    # 💪 MUSCLE GAIN
     elif goal == "muscle gain":
 
         if level == "beginner":
@@ -93,7 +83,6 @@ def recommend(
                 {"name": "Leg Press", "duration": 30}
             ]
 
-    # 🧘 OTHER
     else:
         plan = [
             {"name": "Yoga", "duration": 20},
@@ -105,11 +94,6 @@ def recommend(
             {"name": "Relaxation Exercises", "duration": 10}
         ]
 
-    # 🖼️ ADD IMAGE AUTOMATICALLY
-    for item in plan:
-        item["image"] = f"https://source.unsplash.com/100x100/?{item['name'].replace(' ', ',')}"
-
-    # 🔁 Return to UI
     return templates.TemplateResponse("index.html", {
         "request": request,
         "plan": plan
